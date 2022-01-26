@@ -4,6 +4,7 @@ import About from './About'
 
 export default createRouter({
   history: createWebHistory(),
+
   scrollBehavior: () => ({ top: 0 }),
   routes: [
     {
