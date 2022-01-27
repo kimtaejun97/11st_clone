@@ -1,5 +1,8 @@
 <template>
-  <div class="billboard">
+  <div
+    class="billboard"
+    :style="`background-color: ${currentColor};`">
+    <!-- Billboard Image -->
     <div class="inner">
       <div
         ref="swiper"
@@ -28,6 +31,8 @@ export default {
   data() {
     return {
       billboards: [],
+      currentColor: '',
+      currentIndex: 0,
     }
 
   },
@@ -45,6 +50,7 @@ export default {
       this.billboards = await this.$fetch({
         requestName: 'billboards'
       })
+      console.log(this.billboards)
     },
     swiper() {
       this.swiper = new Swiper(this.$refs.swiper, {
@@ -83,5 +89,15 @@ export default {
 </script>
 
 <style scoped lang=scss>
-
+ .billboard {
+    transition: background-color 1s;
+  }
+  .swiper {
+    width: 1240px;
+    height: 400px;
+    .swiper-lazy-preloader {
+      border-color: #F43242;
+      border-top-color: transparent;
+    }
+  }
 </style>
