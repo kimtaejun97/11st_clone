@@ -118,31 +118,92 @@
     <div class="inner">
       <ul>
         <li>
-          <a href="javascript:void(0)">베스트</a>
+          <a href="#">베스트</a>
         </li>
         <li>
-          <a href="javascript:void(0)">쿠폰/혜택</a>
+          <a href="#">쿠폰/혜택</a>
         </li>
         <li>
-          <a href="javascript:void(0)">기획전</a>
+          <a href="#">기획전</a>
         </li>
         <li>
-          <a href="javascript:void(0)">오늘장보기</a>
+          <a href="#">오늘장보기</a>
         </li>
         <li>
-          <a href="javascript:void(0)">T공식대리점</a>
+          <a href="#">T공식대리점</a>
         </li>
         <li>
           <a
             class="shocking-deal"
-            href="javascript:void(0)"></a>
+            href="#"></a>
         </li>
       </ul>
     </div>
   </div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
+  <div>dd</div>
 </template>
 
 <script>
+import _throttle from 'lodash/throttle'
 import Swiper from 'swiper/bundle'
 import 'swiper/css/bundle'
 
@@ -161,6 +222,7 @@ export default {
         {title: '고객센터', href: '#'},
         {title: '회원정보', href: '#'},
       ],
+      isFixed: false,
     }
   },
   computed: {
@@ -183,12 +245,23 @@ export default {
   },
   methods: {
     async init() {
+      this.throttle()
+
+      await this.getRankings()
+      await this.$nextTick()
+      this.swiper()
+    },
+    throttle() {
+      window.addEventListener('scroll', _throttle(() => {
+        this.isFixed = window.scrollY > 120
+      }, 100))
+    },
+    async getRankings() {
       this.rankings = await this.$fetch({
         requestName: 'rankings'
       })
-
-      await this.$nextTick()
-
+    },
+    swiper() {
       // new Swiper(요소, 옵션)
       new Swiper(this.$refs.swiper, {
         direction: 'vertical',
@@ -535,6 +608,52 @@ header {
           .my__menu {
             display: block;
           }
+        }
+      }
+    }
+  }
+}
+
+.utils {
+  border-top: 1px solid #f1f1f1;
+  &.fixed {
+    padding-top: 120px;
+  }
+  .inner {
+    width: 1240px;
+    margin: 0 auto;
+  }
+  ul {
+    display: flex;
+    li {
+      margin-right: 25px;
+      &:last-child {
+        margin-right: 0;
+      }
+      a {
+        display: flex;
+        align-items: center;
+        height: 66px;
+        font-size: 17px;
+        position: relative;
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background-color: #f43142;
+          opacity: 0;
+        }
+        &:hover::after {
+          opacity: 1;
+        }
+        &.shocking-deal {
+          width: 63px;
+          background-image: url("https://trusting-williams-8cacfb.netlify.app/images/globals_2x.png");
+          background-position: -94px 0;
+          background-size: 363px;
         }
       }
     }
